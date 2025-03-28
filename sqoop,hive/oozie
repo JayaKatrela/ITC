@@ -1,0 +1,45 @@
+##oozie
+
+open hue
+go to workflow
+select actions
+first drag sqoop 1 into drag option
+
+type:
+sqoop import --connect jdbc:postgresql://18.132.73.146:5432/testdb --username consultants --password WelcomeItc@2022 --table person --m 1 --target-dir /tmp/bigdata_nov_2024/prashob/postgres
+
+
+go to terminal
+connect to server
+create a file demo.txt
+paste this command into their 
+
+
+CREATE EXTERNAL TABLE prashob.person (                     
+  name string,
+age string,
+gender string,
+city string,
+country string,
+has_pet string,
+id int
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\n'  
+STORED AS TEXTFILE
+LOCATION '/tmp/big_datajan2025/jaya/postgres/';
+
+
+---------------------------
+put demo.txt into hdfs 
+---------------
+
+go to hue
+drag hive server2 script and paste it into drop your action here
+
+give the path whicj you paste demo.txt
+
+click save
+select dry drum
+
