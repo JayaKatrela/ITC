@@ -1,0 +1,41 @@
+incremental load
+
+first insert 6 new data in postgre
+
+INSERT INTO jaya (id, name, age, email)
+VALUES 
+  (10, 'Ivy', 29, 'mailto:ivy@example.com'),
+  (11, 'Jack', 31, 'mailto:jack@example.com'),
+  (12, 'Katherine', 26, 'mailto:katherine@example.com'),
+  (13, 'Liam', 34, 'mailto:liam@example.com'),
+  (14, 'Mia', 28, 'mailto:mia@example.com'),
+  (15, 'Noah', 30, 'mailto:noah@example.com');
+
+
+sqoop import \
+  --connect jdbc:postgresql://18.170.23.150:5432/testdb \
+  --username consultants \
+  --password WelcomeItc@2022 \
+  --table jaya \
+  --incremental append \
+  --check-column id \
+  --last-value 9 \
+  --target-dir /tmp/big_datajan2025/incremental_load2 \
+  -m 1
+
+
+-------------------
+check the path
+hdfs dfs -ls /tmp/big_datajan2025/incremental_load2 \
+
+
+go to hive
+show databases;
+use default
+show tables
+
+
+ LOAD DATA INPATH '/tmp/big_datajan2025/incremental_load' INTO TABLE jaya;
+
+if issue : sudo -u hdfs hdfs dfs -chmod -R 777 /tmp/big_datajan2025/incremental_load2
+
